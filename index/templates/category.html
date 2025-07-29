@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <head>
     <meta charset="UTF-8">
-    <title>Вазилин Store | Главная</title>
+    <title>Товары по категории</title>
 </head>
 <body class="bg bg-dark">
 <header class="p-3 text-bg-dark">
@@ -12,7 +12,7 @@
             <span>Вазилин Store | </span>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                    <a href="/" class="nav-link px-2 text-secondary">Главная</a>
+                    <a href="/" class="nav-link px-2 text-white">Главная</a>
                 </li>
             </ul>
             <span class="px-3">Поиск</span>
@@ -28,34 +28,20 @@
     </div>
 </header>
 <hr class="text-white">
-<div class="container d-flex 100">
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
-        <span class="fs-4">Категории</span>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            {% for c in categories %}
-            <li class="nav-item mb-3">
-                <a href="/category/{{ c.id }}" class="nav-link active" aria-current="page">
-                    {{ c }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="container px-4 py-4" id="featured-3">
-        <h2 class="pb-2 border-bottom text-white">Товары</h2>
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+<div class="container">
+    <h1 class="text-white">Товары по категории <i class="text-warning">"{{ category }}"</i></h1>
+    <hr class="text-white">
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
             {% for p in products %}
             <div class="feature col">
                 <h3 class="fs-2 text-white">{{ p }}</h3>
-                <p class="text-white">{{ p.product_des | slice:64}}...</p>
+                <p class="text-white">{{ p.product_des }}</p>
                 <a href="/product/{{ p.id }}" class="icon-link">
                 Подробнее ->
                 </a>
             </div>
             {% endfor %}
         </div>
-    </div>
 </div>
 </body>
 </html>
