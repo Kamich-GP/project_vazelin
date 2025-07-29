@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вазилин Store | Главная</title>
+</head>
+<body>
+<h1>Товары</h1>
+{% for p in products %}
+{{ p }}
+<br>
+{% endfor %}
+<hr>
+<h1>Категории</h1>
+{% for c in categories %}
+{{ c }}
+<br>
+{% endfor %}
+</body>
+</html>
