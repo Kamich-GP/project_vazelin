@@ -3,12 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+          height: 100%;
+          margin: 0;
+        }
+    </style>
 </head>
-<body>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Зарегистрироваться</button>
-</form>
+<body class="bg bg-dark">
+<header class="p-1 text-bg-dark">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <span>Вазилин Store | </span>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li>
+                    <a href="/" class="nav-link px-2 text-white">Главная</a>
+                </li>
+            </ul>
+            <span class="px-3">Поиск</span>
+            <form action="/search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" method="post">
+                {% csrf_token %}
+                <input required name="search_product" type="search" class="form-control form-control-dark text-bg-dark"
+                       aria-label="Search">
+            </form>
+            {% if user.is_authenticated %}
+            <div class="text-end">
+                <button type="button" class="btn btn-outline-light me-2">
+                    <a href="/cart" class="text-white text-decoration-none">Корзина</a>
+                </button>
+                <button type="button" class="btn btn-outline-light me-2">
+                    <a href="/logout" class="text-white text-decoration-none">Выйти</a>
+                </button>
+            </div>
+            {% else %}
+            <div class="text-end">
+                <button type="button" class="btn btn-outline-light me-2">
+                    <a href="/accounts/login" class="text-white text-decoration-none">Войти</a>
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</header>
+<hr class="text-white">
+<div class="d-flex justify-content-center align-items-center">
+    <form class="border p-4 rounded shadow bg-dark" method="post" style="min-width: 300px;">
+        {% csrf_token %}
+        <h4 class="mb-3 text-center text-white">Регистрация</h4>
+        <div class="mb-1">
+            <label for="username" class="form-label text-white">Логин</label>
+            <input type="text" name="username" id="username" class="form-control" required>
+        </div>
+        <div class="mb-1">
+            <label for="email" class="form-label text-white">Почта</label>
+            <input type="email" name="email" id="email" class="form-control" required>
+        </div>
+        <div class="mb-1">
+            <label for="password" class="form-label text-white">Пароль</label>
+            <input type="password" name="password1" id="password" class="form-control" required>
+        </div>
+        <div class="mb-5">
+            <label for="password_conf" class="form-label text-white">Повторите пароль</label>
+            <input type="password" name="password2" id="password_conf" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+    </form>
+</div>
 </body>
 </html>

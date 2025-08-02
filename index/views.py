@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Category, Product
+from .models import Category, Product, Cart
 from .forms import RegForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
@@ -82,3 +82,37 @@ class Register(View):
             user.save()
             login(request, user)
             return redirect('/')
+
+
+# Выход из аккаунта
+def logout_view(request):
+    logout(request)
+    return redirect('/')
+
+
+# Добавление товара в корзину
+def add_to_cart(request, pk):
+    product = Product.objects.get(id=pk)
+    product_count = product.product_count
+
+    if request.method == 'POST':
+        if 1 <= int(request.POST.get('pr_count')) <= product_count:
+            Cart.objects.create(user_id=request.user.id,
+                                user_product=product,
+                                user_pr_amount=int(request.POST.get('pr_count'))).save()
+            return redirect('/')
+        return redirect(f'/product/{pk}')
+
+
+# Удаление товара из корзины
+def del_from_cart(request, pk):
+    Cart.objects.filter(user_product=Product.objects.get(id=pk)).delete()
+    return redirect('/cart')
+
+
+# Отображение корзины
+def cart_page(request):
+    user_cart = Cart.objects.filter(user_id=request.user.id)
+
+    context = {'cart': user_cart}
+    return render(request, 'cart.html', context)

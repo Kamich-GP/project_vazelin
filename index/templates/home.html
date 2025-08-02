@@ -20,10 +20,22 @@
                 {% csrf_token %}
                 <input required name="search_product" type="search" class="form-control form-control-dark text-bg-dark" aria-label="Search">
             </form>
+            {% if user.is_authenticated %}
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Login</button>
-                <button type="button" class="btn btn-warning">Sign-up</button>
+                <button type="button" class="btn btn-outline-light me-2">
+                    <a href="/cart" class="text-white text-decoration-none">Корзина</a>
+                </button>
+                <button type="button" class="btn btn-outline-light me-2">
+                    <a href="/logout" class="text-white text-decoration-none">Выйти</a>
+                </button>
             </div>
+            {% else %}
+            <div class="text-end">
+                <button type="button" class="btn btn-outline-light me-2">
+                    <a href="/accounts/login" class="text-white text-decoration-none">Войти</a>
+                </button>
+            </div>
+            {% endif %}
         </div>
     </div>
 </header>

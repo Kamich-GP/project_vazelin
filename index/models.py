@@ -31,4 +31,4 @@ class Cart(models.Model):
     user_pr_amount = models.IntegerField()
 
     def __str__(self):
-        return self.user_id
+        return str(self.user_id)
