@@ -4,6 +4,12 @@ from .forms import RegForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.views import View
+import telebot
+
+
+# Создаем объект бота
+bot = telebot.TeleBot('TOKEN')
+group_id = -4809779041
 
 
 # Create your views here.
@@ -113,6 +119,27 @@ def del_from_cart(request, pk):
 # Отображение корзины
 def cart_page(request):
     user_cart = Cart.objects.filter(user_id=request.user.id)
+    totals = [round(t.user_product.product_price * t.user_pr_amount) for t in user_cart]
+    context = {
+        'cart': user_cart,
+        'total': round(sum(totals))
+    }
 
-    context = {'cart': user_cart}
+    if request.method == 'POST':
+        text = (f'Новый заказ!\n'
+                f'Клиент: {User.objects.get(id=request.user.id).email}\n\n')
+
+        for i in user_cart:
+            product = Product.objects.get(id=i.user_product.id)
+            product.product_count = product.product_count - i.user_pr_amount
+            product.save(update_fields=['product_count'])
+
+            text += (f'Товар: {i.user_product}\n'
+                     f'Количество: {i.user_pr_amount}\n'
+                     f'--------------------------------\n')
+        text += f'Итого: ${round(sum(totals))}'
+        bot.send_message(group_id, text)
+        user_cart.delete()
+        return redirect('/')
+
     return render(request, 'cart.html', context)
