@@ -8,7 +8,7 @@ import telebot
 
 
 # Создаем объект бота
-bot = telebot.TeleBot('TOKEN')
+bot = telebot.TeleBot('7377730742:AAEi9DPbl9KuDXYVxW-p1feMTXNsHSuHUj8')
 group_id = -4809779041
 
 

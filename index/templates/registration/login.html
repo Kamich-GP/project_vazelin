@@ -1,3 +1,4 @@
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -61,6 +62,11 @@
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-primary w-100">Войти</button>
+        </div>
+        <div class="mb-2">
+            <button type="button" class="btn btn-primary w-100">
+                <a href="{% provider_login_url 'google' process='login' %}" class="text-white text-decoration-none">Войти через Google</a>
+            </button>
         </div>
         <p class="text-white">Нет аккаунта? Тогда вы можете <a href="/register">Зарегистрироваться</a></p>
     </form>
